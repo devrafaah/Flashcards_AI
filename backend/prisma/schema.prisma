@@ -1,0 +1,49 @@
+generator client {
+  provider = "prisma-client-js"
+  previewFeatures = ["driverAdapters"]
+}
+
+datasource db {
+  provider = "sqlite"
+}
+
+model User {
+  id        String         @id @default(cuid())
+  email     String         @unique
+  senha     String
+  decks     Deck[]
+  sessions  StudySession[]
+  createdAt DateTime       @default(now())
+}
+
+model Deck {
+  id        String         @id @default(cuid())
+  titulo    String
+  arquivo   String
+  userId    String
+  user      User           @relation(fields: [userId], references: [id])
+  cards     Card[]
+  sessions  StudySession[]
+  createdAt DateTime       @default(now())
+}
+
+model Card {
+  id          String @id @default(cuid())
+  pergunta    String
+  resposta    String
+  pagina      Int
+  dificuldade String
+  deckId      String
+  deck        Deck   @relation(fields: [deckId], references: [id])
+}
+
+model StudySession {
+  id          String   @id @default(cuid())
+  acertos     Int      @default(0)
+  erros       Int      @default(0)
+  userId      String
+  deckId      String
+  user        User     @relation(fields: [userId], references: [id])
+  deck        Deck     @relation(fields: [deckId], references: [id])
+  completedAt DateTime @default(now())
+}

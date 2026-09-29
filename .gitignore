@@ -1,0 +1,5 @@
+# Material de referência de design (protótipo, não faz parte do app)
+design_handoff_flashcards_ai/
+
+# Dependências (cada pacote tem seu próprio node_modules)
+node_modules/
