@@ -1,0 +1,93 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  body {
+    @apply bg-base text-ink font-sans;
+    letter-spacing: -0.011em;
+    line-height: 1.55;
+    -webkit-font-smoothing: antialiased;
+    text-rendering: optimizeLegibility;
+    min-height: 100vh;
+    overflow-x: hidden;
+    position: relative;
+  }
+
+  ::selection {
+    @apply bg-accent-soft text-ink;
+  }
+
+  :focus-visible {
+    outline: 2px solid #818cf8;
+    outline-offset: 3px;
+    border-radius: 10px;
+  }
+
+  #root {
+    position: relative;
+    z-index: 2;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+  }
+}
+
+@layer components {
+  /* — atmosfera: orbs fixos, grão de fundo — */
+  .orb {
+    position: fixed;
+    border-radius: 9999px;
+    filter: blur(110px);
+    pointer-events: none;
+  }
+
+  .grain-overlay {
+    position: fixed;
+    inset: 0;
+    z-index: 1;
+    pointer-events: none;
+    opacity: 0.04;
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+  }
+
+  /* — flip 3D — */
+  .perspective-1600 {
+    perspective: 1600px;
+  }
+  .perspective-2200 {
+    perspective: 2200px;
+  }
+  .preserve-3d {
+    transform-style: preserve-3d;
+  }
+  .backface-hidden {
+    backface-visibility: hidden;
+    -webkit-backface-visibility: hidden;
+  }
+  .rotate-y-180 {
+    transform: rotateY(180deg);
+  }
+
+  /* reflexo de canto usado em cards de vidro */
+  .glass-sheen {
+    position: absolute;
+    inset: 0;
+    border-radius: inherit;
+    pointer-events: none;
+    background: linear-gradient(135deg, rgba(255, 255, 255, 0.1), transparent 35%);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .orb {
+    animation: none !important;
+  }
+  .spinner,
+  .step-spinner {
+    animation-duration: 2.4s !important;
+  }
+  .flip-inner {
+    transition: none !important;
+  }
+}
